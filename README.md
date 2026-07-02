@@ -102,7 +102,7 @@ Many aquatic and semi-aquatic species require precise water temperature ranges t
 
 | Fan Pin            | Connection                   |
 | ------------------ | ---------------------------- |
-| Pin 1 (arrow, GND) | GND rail (breadboard)        |
+| Pin 1 (arrow, GND) | MOSFET `OUT-`                |
 | Pin 2 (12V)        | Relay `NO`                   |
 | Pin 3 (tachometer) | Not connected                |
 | Pin 4 (PWM signal) | Not connected                |
@@ -167,23 +167,24 @@ INTERVALO_LECTURA = 5    # Seconds between readings
 
 ## 🚀 Running the System
 
-Connect the IdeaBoard via USB and open the REPL:
+### 1. Copy files to the IdeaBoard
+
+Create a folder on the IdeaBoard and upload the source files:
 
 ```bash
 mpremote connect /dev/cu.usbserial-XXXX
+ampy --port /dev/cu.usbserial-XXXX mkdir /sistema-termorregulacion
+ampy --port /dev/cu.usbserial-XXXX put src/main.py /sistema-termorregulacion/main.py
+ampy --port /dev/cu.usbserial-XXXX put src/config.py /sistema-termorregulacion/config.py
 ```
 
-Then execute:
+### 2. Run from the REPL
 
 ```python
 import sys
-sys.path.append('/ajolote')
-exec(open('/ajolote/main.py').read())
+sys.path.append('/sistema-termorregulacion')
+exec(open('/sistema-termorregulacion/main.py').read())
 ```
-
-Press `Ctrl-C` to stop. The system will safely shut down fans and display "Sistema detenido con exito" before exiting.
-
----
 
 ## 🗺️ Roadmap
 
